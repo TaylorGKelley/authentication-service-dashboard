@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import useAuthContext from '../hooks/useAuthContext';
+import { useAuthContext } from 'authentication-service-react-sdk';
 
 export const Route = createFileRoute('/')({
   component: Index,

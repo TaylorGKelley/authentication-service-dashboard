@@ -14,6 +14,7 @@
     "@tanstack/react-form": "^1.2.1",
     "@tanstack/react-query": "^5.71.1",
     "@tanstack/react-router": "^1.114.29",
+    "authentication-service-react-sdk": "github:taylorGKelley/authentication-service-react-sdk",
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

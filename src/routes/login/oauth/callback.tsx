@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter, useSearch } from '@tanstack/react-router';
-import useAuthContext from '../../../hooks/useAuthContext';
+import { useAuthContext } from 'authentication-service-react-sdk';
 import { useEffect } from 'react';
 
 export const Route = createFileRoute('/login/oauth/callback')({

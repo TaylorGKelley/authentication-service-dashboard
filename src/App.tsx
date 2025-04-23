@@ -1,9 +1,10 @@
 import { RouterProvider } from '@tanstack/react-router';
-import useAuthContext from './hooks/useAuthContext';
-import AuthProvider from './providers/AuthProvider';
 import { router } from './main';
-import AuthContextType from './types/AuthContextType';
-import CSRFProvider from './providers/CSRFProvider';
+import {
+  AuthContextType,
+  AuthProvider,
+  useAuthContext,
+} from 'authentication-service-react-sdk';
 
 function InnerApp() {
   const auth = useAuthContext();
@@ -18,11 +19,9 @@ function InnerApp() {
 
 function App() {
   return (
-    <CSRFProvider>
-      <AuthProvider>
-        <InnerApp />
-      </AuthProvider>
-    </CSRFProvider>
+    <AuthProvider>
+      <InnerApp />
+    </AuthProvider>
   );
 }
 
