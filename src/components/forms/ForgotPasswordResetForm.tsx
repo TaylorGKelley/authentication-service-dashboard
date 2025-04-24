@@ -1,7 +1,7 @@
 import { useForm } from '@tanstack/react-form';
 import { useRouter, useSearch } from '@tanstack/react-router';
 import { z } from 'zod';
-import api from '../../lib/api';
+import {api} from 'authentication-service-react-sdk';
 
 const ForgotPasswordResetForm = () => {
   const router = useRouter();

@@ -1,7 +1,6 @@
 import { useRouter } from '@tanstack/react-router';
 import { z } from 'zod';
-import useAuthContext from '../../hooks/useAuthContext';
-import User from '../../types/User';
+import {useAuthContext, type User} from 'authentication-service-react-sdk';
 import axios from 'axios';
 import { useAppForm } from '../../hooks/useAppForm';
 
