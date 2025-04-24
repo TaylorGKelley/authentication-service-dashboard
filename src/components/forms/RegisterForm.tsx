@@ -4,6 +4,23 @@ import {useAuth, type User} from 'authentication-service-react-sdk';
 import axios from 'axios';
 import { useAppForm } from '../../hooks/useAppForm';
 
+const registerSchema = z
+.object({
+  firstName: z.string().nonempty('First name is required'),
+  lastName: z.string().nonempty('Last name is required'),
+  email: z.string().email('Invalid Email'),
+  password: z
+    .string()
+    .min(8, 'Password must be over 8 characters long'),
+  passwordConfirm: z
+    .string()
+    .min(8, 'Password must be over 8 characters long'),
+})
+.refine((data) => data.password === data.passwordConfirm, {
+  message: 'Passwords do not match',
+  path: ['passwordConfirm'],
+})
+
 const RegisterForm = () => {
   const router = useRouter();
   const auth = useAuth();
@@ -17,51 +34,49 @@ const RegisterForm = () => {
       passwordConfirm: '',
     },
     validators: {
-      onSubmit: z
-        .object({
-          firstName: z.string().nonempty('First name is required'),
-          lastName: z.string().nonempty('Last name is required'),
-          email: z.string().email('Invalid Email'),
-          password: z
-            .string()
-            .min(8, 'Password must be over 8 characters long'),
-          passwordConfirm: z
-            .string()
-            .min(8, 'Password must be over 8 characters long'),
-        })
-        .refine((data) => data.password === data.passwordConfirm, {
-          message: 'Passwords do not match',
-          path: ['passwordConfirm'],
-        }),
-    },
-    onSubmit: async ({ value }) => {
-      const response = await axios.post(
-        'http://localhost:7001/api/v1/register',
-        {
-          ...value,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-
-      if (response.status === 201) {
-        const { accessToken, user } = response.data as {
-          accessToken: string;
-          user: User;
-        };
-
-        auth.login({
-          accessToken: accessToken,
-          user,
-        });
-
-        router.navigate({ to: '/' });
-      } else {
-        return 'Invalid Email or Password';
+      onChange: registerSchema,
+      onSubmitAsync: async ({ value }) => {
+        try {         
+          const response = await axios.post<{accessToken?: string, user?: User, message?: string}>(
+            'http://localhost:7001/api/v1/register',
+            {
+              ...value,
+            },
+            {
+              withCredentials: true,
+            },
+          );
+          
+          if (response.status === 400) {
+            return {
+              form: response.data.message!
+            }
+          } else if (response.status === 403) {
+            return {
+              fields: {
+                email: response.data.message!
+              }
+            }
+          }
+          
+          const { accessToken, user } = response.data
+          auth.login({
+            accessToken: accessToken!,
+            user: user!,
+          });
+          
+          return null;
+        }
+        catch (error) {
+          console.error(error);
+        }
       }
     },
+    onSubmit: () => {
+        router.navigate({ to: '/' });
+    },
   });
+
   return (
     <div>
       <form
@@ -148,6 +163,9 @@ const RegisterForm = () => {
         />
         <form.Field
           name="passwordConfirm"
+          validators={{
+            onChangeListenTo: ['password']
+          }}
           children={(field) => (
             <div className="flex flex-col">
               <label htmlFor={field.name} className="text-sm">
@@ -164,10 +182,8 @@ const RegisterForm = () => {
             </div>
           )}
         />
+
         <form.SubmitButton>Submit</form.SubmitButton>
-        {form.state.errors.map((error) => (
-          <p>{error?.toString()}</p>
-        ))}
         <a
           href="http://localhost:7001/api/v1/auth/google"
           className="w-full cursor-pointer rounded-xl bg-slate-800 px-6 py-1 text-center text-white no-underline shadow-md"

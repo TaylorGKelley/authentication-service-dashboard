@@ -5,7 +5,7 @@ import { fieldContext, formContext } from '../contexts/FormContext';
 import TextField from '../components/inputs/TextField';
 const SubmitButton = lazy(() => import('../components/inputs/SubmitButton'));
 
-export const { useAppForm, withForm } = createFormHook({
+const { useAppForm, withForm } = createFormHook({
   fieldComponents: {
     TextField,
   },
@@ -15,3 +15,5 @@ export const { useAppForm, withForm } = createFormHook({
   fieldContext,
   formContext,
 });
+
+export { useAppForm, withForm}
