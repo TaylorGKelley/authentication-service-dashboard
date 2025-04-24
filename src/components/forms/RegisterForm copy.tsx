@@ -1,9 +1,8 @@
-// import { useRouter } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { z } from 'zod';
-// import { type User } from 'authentication-service-react-sdk';
-// import axios from 'axios';
+import { useAuth, type User } from 'authentication-service-react-sdk';
+import axios from 'axios';
 import { useAppForm } from '../../hooks/useAppForm';
-import FieldInfo from '../inputs/FieldInfo';
 
 const registerSchema = z
   .object({
@@ -20,25 +19,9 @@ const registerSchema = z
     path: ['passwordConfirm'],
   });
 
-// type RegistrationBodyType = z.infer<typeof registerSchema>;
-// const submitRegistration = async (reqBody: RegistrationBodyType) => {
-//   const response = await axios.post<{
-//     accessToken?: string;
-//     user?: User;
-//     message?: string;
-//   }>(
-//     'http://localhost:7001/api/v1/register',
-//     {
-//       ...reqBody,
-//     },
-//     {
-//       withCredentials: true,
-//     },
-//   );
-// };
-
 const RegisterForm = () => {
-  // const router = useRouter();
+  const router = useRouter();
+  const auth = useAuth();
 
   const form = useAppForm({
     defaultValues: {
@@ -50,10 +33,48 @@ const RegisterForm = () => {
     },
     validators: {
       onChange: registerSchema,
+      onSubmitAsync: async ({ value }) => {
+        try {
+          const response = await axios.post<{
+            accessToken?: string;
+            user?: User;
+            message?: string;
+          }>(
+            'http://localhost:7001/api/v1/register',
+            {
+              ...value,
+            },
+            {
+              withCredentials: true,
+            },
+          );
+
+          if (response.status === 400) {
+            return {
+              form: response.data.message!,
+            };
+          } else if (response.status === 403) {
+            return {
+              fields: {
+                email: response.data.message!,
+              },
+            };
+          }
+
+          const { accessToken, user } = response.data;
+          auth.login({
+            accessToken: accessToken!,
+            user: user!,
+          });
+
+          return null;
+        } catch (error) {
+          console.error(error);
+        }
+      },
     },
-    onSubmit: async ({ value }) => {
-      console.log(value);
-      // router.navigate({ to: '/' });
+    onSubmit: () => {
+      router.navigate({ to: '/' });
     },
   });
 
@@ -68,9 +89,23 @@ const RegisterForm = () => {
         className="flex max-w-sm flex-col gap-4"
       >
         <div className="grid grid-cols-2 gap-4">
-          <form.AppField
+          <form.Field
             name="firstName"
-            children={(field) => <field.TextField label="First Name" />}
+            children={(field) => (
+              <div className="flex flex-col">
+                <label htmlFor={field.name} className="text-sm">
+                  First Name:
+                </label>
+                <input
+                  id={field.name}
+                  name={field.name}
+                  type="text"
+                  value={field.state.value}
+                  onChange={(e) => field.setValue(e.target.value)}
+                  className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
+                />
+              </div>
+            )}
           />
           <form.Field
             name="lastName"
@@ -87,7 +122,6 @@ const RegisterForm = () => {
                   onChange={(e) => field.setValue(e.target.value)}
                   className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
                 />
-                <FieldInfo field={field} />
               </div>
             )}
           />
@@ -107,7 +141,6 @@ const RegisterForm = () => {
                 onChange={(e) => field.setValue(e.target.value)}
                 className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
               />
-              <FieldInfo field={field} />
             </div>
           )}
         />
@@ -126,7 +159,6 @@ const RegisterForm = () => {
                 onChange={(e) => field.setValue(e.target.value)}
                 className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
               />
-              <FieldInfo field={field} />
             </div>
           )}
         />
@@ -148,13 +180,10 @@ const RegisterForm = () => {
                 onChange={(e) => field.setValue(e.target.value)}
                 className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
               />
-              <FieldInfo field={field} />
             </div>
           )}
         />
-        <form.AppForm>
-          <form.SubmitButton label="Submit" />
-        </form.AppForm>
+        <form.SubmitButton>Submit</form.SubmitButton>
         <a
           href="http://localhost:7001/api/v1/auth/google"
           className="w-full cursor-pointer rounded-xl bg-slate-800 px-6 py-1 text-center text-white no-underline shadow-md"
