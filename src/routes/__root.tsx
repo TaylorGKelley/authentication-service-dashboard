@@ -8,7 +8,7 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import './global.css';
 import {
   AuthContextType,
-  useAuthContext,
+  useAuth,
 } from 'authentication-service-react-sdk';
 
 type RouterContext = {
@@ -21,7 +21,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootLayout() {
   const router = useRouter();
-  const { isAuthenticated, user, logout } = useAuthContext();
+  const { isAuthenticated, user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();

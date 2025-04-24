@@ -3,11 +3,11 @@ import { router } from './main';
 import {
   AuthContextType,
   AuthProvider,
-  useAuthContext,
+  useAuth,
 } from 'authentication-service-react-sdk';
 
 function InnerApp() {
-  const auth = useAuthContext();
+  const auth = useAuth();
 
   return (
     <RouterProvider

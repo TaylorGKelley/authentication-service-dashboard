@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter, useSearch } from '@tanstack/react-router';
-import { useAuthContext } from 'authentication-service-react-sdk';
+import { useAuth } from 'authentication-service-react-sdk';
 import { useEffect } from 'react';
 
 export const Route = createFileRoute('/login/oauth/callback')({
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/login/oauth/callback')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { setAccessToken } = useAuthContext();
+  const { setAccessToken } = useAuth();
   const { accessToken } = useSearch({ from: '/login/oauth/callback' });
 
   useEffect(() => {

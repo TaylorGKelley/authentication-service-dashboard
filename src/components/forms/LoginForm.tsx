@@ -1,12 +1,12 @@
 import { useForm } from '@tanstack/react-form';
 import { Link, useRouter, useSearch } from '@tanstack/react-router';
 import { z } from 'zod';
-import {useAuthContext, type User} from 'authentication-service-react-sdk';
+import {useAuth, type User} from 'authentication-service-react-sdk';
 import axios from 'axios';
 
 const LoginForm = () => {
   const router = useRouter();
-  const auth = useAuthContext();
+  const auth = useAuth();
   const { redirect } = useSearch({ from: '/login/' });
 
   const form = useForm({
