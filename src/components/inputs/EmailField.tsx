@@ -1,9 +1,9 @@
 import { useFieldContext } from '../../contexts/FormContext';
 import FieldInfo from './FieldInfo';
 
-type TextInputProps = { label: string };
+type EmailInputProps = { label: string };
 
-function TextField({ label }: TextInputProps) {
+function EmailField({ label }: EmailInputProps) {
   const field = useFieldContext<string>();
 
   return (
@@ -12,7 +12,7 @@ function TextField({ label }: TextInputProps) {
       <input
         id={field.name}
         name={field.name}
-        type="password"
+        type="email"
         className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
         value={field.state.value}
         onChange={(e) => field.handleChange(e.target.value)}
@@ -22,4 +22,4 @@ function TextField({ label }: TextInputProps) {
   );
 }
 
-export default TextField;
+export default EmailField;

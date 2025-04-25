@@ -1,9 +1,9 @@
 import { useFieldContext } from '../../contexts/FormContext';
 import FieldInfo from './FieldInfo';
 
-type TextInputProps = { label: string };
+type PasswordInputProps = { label: string };
 
-function TextField({ label }: TextInputProps) {
+function PasswordField({ label }: PasswordInputProps) {
   const field = useFieldContext<string>();
 
   return (
@@ -22,4 +22,4 @@ function TextField({ label }: TextInputProps) {
   );
 }
 
-export default TextField;
+export default PasswordField;

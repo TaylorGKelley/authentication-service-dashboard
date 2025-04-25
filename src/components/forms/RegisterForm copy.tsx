@@ -89,101 +89,31 @@ const RegisterForm = () => {
         className="flex max-w-sm flex-col gap-4"
       >
         <div className="grid grid-cols-2 gap-4">
-          <form.Field
+          <form.AppField
             name="firstName"
-            children={(field) => (
-              <div className="flex flex-col">
-                <label htmlFor={field.name} className="text-sm">
-                  First Name:
-                </label>
-                <input
-                  id={field.name}
-                  name={field.name}
-                  type="text"
-                  value={field.state.value}
-                  onChange={(e) => field.setValue(e.target.value)}
-                  className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
-                />
-              </div>
-            )}
+            children={(field) => <field.TextField label="First Name" />}
           />
-          <form.Field
+          <form.AppField
             name="lastName"
-            children={(field) => (
-              <div className="flex flex-col">
-                <label htmlFor={field.name} className="text-sm">
-                  Last Name:
-                </label>
-                <input
-                  id={field.name}
-                  name={field.name}
-                  type="text"
-                  value={field.state.value}
-                  onChange={(e) => field.setValue(e.target.value)}
-                  className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
-                />
-              </div>
-            )}
+            children={(field) => <field.TextField label="Last Name" />}
           />
         </div>
-        <form.Field
+        <form.AppField
           name="email"
-          children={(field) => (
-            <div className="flex flex-col">
-              <label htmlFor={field.name} className="text-sm">
-                Email:
-              </label>
-              <input
-                id={field.name}
-                name={field.name}
-                type="email"
-                value={field.state.value}
-                onChange={(e) => field.setValue(e.target.value)}
-                className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
-              />
-            </div>
-          )}
+          children={(field) => <field.EmailField label="Email" />}
         />
-        <form.Field
+        <form.AppField
           name="password"
-          children={(field) => (
-            <div className="flex flex-col">
-              <label htmlFor={field.name} className="text-sm">
-                Password:
-              </label>
-              <input
-                id={field.name}
-                name={field.name}
-                type="password"
-                value={field.state.value}
-                onChange={(e) => field.setValue(e.target.value)}
-                className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
-              />
-            </div>
-          )}
+          children={(field) => <field.PasswordField label="Password" />}
         />
-        <form.Field
+        <form.AppField
           name="passwordConfirm"
           validators={{
             onChangeListenTo: ['password'],
           }}
-          children={(field) => (
-            <div className="flex flex-col">
-              <label htmlFor={field.name} className="text-sm">
-                Password Confirm:
-              </label>
-              <input
-                id={field.name}
-                name={field.name}
-                type="password"
-                value={field.state.value}
-                onChange={(e) => field.setValue(e.target.value)}
-                className="rounded-xl border-1 border-slate-800 bg-white px-4 py-1 shadow-md"
-              />
-            </div>
-          )}
+          children={(field) => <field.PasswordField label="Confirm Password" />}
         />
-        <form.SubmitButton>Submit</form.SubmitButton>
+        <form.SubmitButton label="submit" />
         <a
           href="http://localhost:7001/api/v1/auth/google"
           className="w-full cursor-pointer rounded-xl bg-slate-800 px-6 py-1 text-center text-white no-underline shadow-md"
