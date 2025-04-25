@@ -19,7 +19,7 @@ function InnerApp() {
 
 function App() {
   return (
-    <AuthProvider>
+    <AuthProvider baseUrl="http://localhost:7001">
       <InnerApp />
     </AuthProvider>
   );

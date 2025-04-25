@@ -6,10 +6,7 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import './global.css';
-import {
-  AuthContextType,
-  useAuth,
-} from 'authentication-service-react-sdk';
+import { AuthContextType, useAuth } from 'authentication-service-react-sdk';
 
 type RouterContext = {
   auth: AuthContextType | undefined;
