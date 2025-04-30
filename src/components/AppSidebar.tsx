@@ -38,7 +38,7 @@ const data: DataType = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} className="relative">
       <SidebarHeader>
         <h4>Auth Dashboard</h4>
       </SidebarHeader>
