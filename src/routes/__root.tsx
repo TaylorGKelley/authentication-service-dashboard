@@ -28,10 +28,10 @@ function RootLayout() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="relative container mx-auto">
       <SidebarProvider>
-        <AppSidebar variant="sidebar" />
-        <div>
+        <AppSidebar />
+        <div className="w-full">
           <div className="flex gap-4 p-2">
             <div className="align-center flex flex-grow gap-4">
               <Link to="/" className="[&.active]:font-bold">
