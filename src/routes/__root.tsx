@@ -7,6 +7,8 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import './global.css';
 import { AuthContextType, useAuth } from 'authentication-service-react-sdk';
+import { AppSidebar } from '@/components/AppSidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 type RouterContext = {
   auth: AuthContextType | undefined;
@@ -26,48 +28,55 @@ function RootLayout() {
   };
 
   return (
-    <main className="container mx-auto">
-      <div className="flex gap-4 p-2">
-        <div className="align-center flex flex-grow gap-4">
-          <Link to="/" className="[&.active]:font-bold">
-            Home
-          </Link>
-        </div>
-        <div className="flex justify-center gap-4">
-          {isAuthenticated ? (
-            <>
-              <p>
-                Welcome back,{' '}
-                {user?.firstName
-                  ? user?.firstName + ' ' + user?.lastName
-                  : user?.email}
-              </p>
-              <button
-                onClick={handleLogout}
-                className="cursor-pointer border-none bg-none p-0"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/register" className="[&.active]:font-bold">
-                Register
+    <div className="container mx-auto">
+      <SidebarProvider>
+        <AppSidebar variant="sidebar" />
+        <div>
+          <div className="flex gap-4 p-2">
+            <div className="align-center flex flex-grow gap-4">
+              <Link to="/" className="[&.active]:font-bold">
+                Home
               </Link>
-              <Link
-                to="/login"
-                search={{ redirect: '/' }}
-                className="[&.active]:font-bold"
-              >
-                Login
-              </Link>
-            </>
-          )}
+            </div>
+            <div className="flex justify-center gap-4">
+              {isAuthenticated ? (
+                <>
+                  <p>
+                    Welcome back,{' '}
+                    {user?.firstName
+                      ? user?.firstName + ' ' + user?.lastName
+                      : user?.email}
+                  </p>
+                  <button
+                    onClick={handleLogout}
+                    className="cursor-pointer border-none bg-none p-0"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/register" className="[&.active]:font-bold">
+                    Register
+                  </Link>
+                  <Link
+                    to="/login"
+                    search={{ redirect: '/' }}
+                    className="[&.active]:font-bold"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+          <hr />
+          <main>
+            <Outlet />
+          </main>
         </div>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </main>
+        <TanStackRouterDevtools />
+      </SidebarProvider>
+    </div>
   );
 }
