@@ -5,7 +5,6 @@ import {
   useRouter,
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import './global.css';
 import { AuthContextType, useAuth } from 'authentication-service-react-sdk';
 import { AppSidebar } from '@/components/AppSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
