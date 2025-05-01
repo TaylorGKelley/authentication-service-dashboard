@@ -12,6 +12,13 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Link, useRouterState } from '@tanstack/react-router';
+import {
+  LucideFileLock,
+  LucideHome,
+  LucideSettings,
+  LucideUser2,
+  LucideUserPlus2,
+} from 'lucide-react';
 
 type MenuItemType = {
   icon?: React.ReactNode;
@@ -28,10 +35,12 @@ type DataType = {
 const data: DataType = {
   navItems: [
     {
+      icon: <LucideHome />,
       title: 'Home',
       url: '/',
     },
     {
+      icon: <LucideUser2 />,
       title: 'User Management',
       url: '/users',
     },
@@ -39,10 +48,12 @@ const data: DataType = {
       title: 'Settings',
       items: [
         {
+          icon: <LucideUserPlus2 />,
           title: 'Roles',
           url: '/settings/roles',
         },
         {
+          icon: <LucideFileLock />,
           title: 'Permissions',
           url: '/settings/permissions',
         },
@@ -58,7 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="none"
-      className="relative h-screen border-x-[1px] border-r-gray-200"
+      className="relative h-screen border-x-[1px] border-r-gray-200 p-4"
       {...props}
     >
       <SidebarHeader>
@@ -71,17 +82,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenuButton isActive={currentPath === item.url}>
                 <Link to={item.url} className="h-full w-full">
                   {item.icon}
-                  {item.title}
+                  <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ) : (
             <SidebarGroup key={item.title}>
               <SidebarGroupLabel>
-                <Link to={item.url}>
-                  {item.icon}
-                  {item.title}
-                </Link>
+                <span>{item.title}</span>
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -93,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       >
                         <Link to={item.url} className="h-full w-full">
                           {item.icon}
-                          {item.title}
+                          <span>{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
