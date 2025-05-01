@@ -15,6 +15,7 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import {
   LucideFileLock,
   LucideHome,
+  LucideServer,
   LucideUser2,
   LucideUserPlus2,
 } from 'lucide-react';
@@ -56,6 +57,11 @@ const data: DataType = {
           title: 'Permissions',
           url: '/settings/permissions',
         },
+        {
+          icon: <LucideServer />,
+          title: 'Services',
+          url: '/settings/services',
+        },
       ],
     },
   ],
@@ -74,25 +80,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="p-2">
         <h1 className="text-center">Auth Dashboard</h1>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="p-2">
         {data.navItems.map((item) =>
           !item.items ? (
-            <SidebarGroup key={item.title}>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton isActive={currentPath === item.url}>
-                      <Link to={item.url} className="h-full w-full">
-                        {item.icon}
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
+            <SidebarMenu>
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild isActive={currentPath === item.url}>
+                  <Link to={item.url} className="h-full w-full">
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           ) : (
-            <SidebarGroup key={item.title}>
+            <SidebarGroup key={item.title} className="p-0">
               <SidebarGroupLabel>
                 <span>{item.title}</span>
               </SidebarGroupLabel>
