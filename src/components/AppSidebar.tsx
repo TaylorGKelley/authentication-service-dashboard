@@ -68,23 +68,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="none"
-      className="relative h-screen border-x-[1px] border-r-gray-200 p-4"
+      className="relative h-screen border-x-[1px] border-r-gray-200"
       {...props}
     >
-      <SidebarHeader>
-        <h4>Auth Dashboard</h4>
+      <SidebarHeader className="p-2">
+        <h1 className="text-center">Auth Dashboard</h1>
       </SidebarHeader>
       <SidebarContent>
         {data.navItems.map((item) =>
           !item.items ? (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton isActive={currentPath === item.url}>
-                <Link to={item.url} className="h-full w-full">
-                  {item.icon}
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            <SidebarGroup key={item.title}>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton isActive={currentPath === item.url}>
+                      <Link to={item.url} className="h-full w-full">
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
           ) : (
             <SidebarGroup key={item.title}>
               <SidebarGroupLabel>
