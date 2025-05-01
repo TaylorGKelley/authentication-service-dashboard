@@ -30,7 +30,7 @@ function RootLayout() {
     <div className="relative container mx-auto">
       <SidebarProvider>
         <AppSidebar />
-        <div className="w-full overflow-y-auto">
+        <div className="w-full">
           <div className="flex justify-end gap-4 p-2">
             <div className="flex items-center gap-4">
               {isAuthenticated ? (
@@ -65,7 +65,7 @@ function RootLayout() {
             </div>
           </div>
           <hr />
-          <main>
+          <main className="overflow-y-auto">
             <Outlet />
           </main>
         </div>
