@@ -15,7 +15,6 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import {
   LucideFileLock,
   LucideHome,
-  LucideSettings,
   LucideUser2,
   LucideUserPlus2,
 } from 'lucide-react';
