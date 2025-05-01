@@ -19,7 +19,8 @@ type MenuItemType = {
   url: string;
 };
 type DataType = {
-  navItems: (MenuItemType & {
+  navItems: (Omit<MenuItemType, 'url'> & {
+    url?: string;
     items?: MenuItemType[];
   })[];
 };
@@ -31,8 +32,21 @@ const data: DataType = {
       url: '/',
     },
     {
-      title: 'Users',
+      title: 'User Management',
       url: '/users',
+    },
+    {
+      title: 'Settings',
+      items: [
+        {
+          title: 'Roles',
+          url: '/settings/roles',
+        },
+        {
+          title: 'Permissions',
+          url: '/settings/permissions',
+        },
+      ],
     },
   ],
 };
