@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as RegisterImport } from './routes/register'
 import { Route as ProtectedRouteImport } from './routes/protected.route'
 import { Route as IndexImport } from './routes/index'
+import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as ForgotPasswordIndexImport } from './routes/forgot-password/index'
 import { Route as ForgotPasswordResetImport } from './routes/forgot-password/reset'
@@ -36,6 +37,12 @@ const ProtectedRouteRoute = ProtectedRouteImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersIndexRoute = UsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -109,6 +116,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/login/oauth/callback': {
       id: '/login/oauth/callback'
       path: '/login/oauth/callback'
@@ -128,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password/reset': typeof ForgotPasswordResetRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/login': typeof LoginIndexRoute
+  '/users': typeof UsersIndexRoute
   '/login/oauth/callback': typeof LoginOauthCallbackRoute
 }
 
@@ -138,6 +153,7 @@ export interface FileRoutesByTo {
   '/forgot-password/reset': typeof ForgotPasswordResetRoute
   '/forgot-password': typeof ForgotPasswordIndexRoute
   '/login': typeof LoginIndexRoute
+  '/users': typeof UsersIndexRoute
   '/login/oauth/callback': typeof LoginOauthCallbackRoute
 }
 
@@ -149,6 +165,7 @@ export interface FileRoutesById {
   '/forgot-password/reset': typeof ForgotPasswordResetRoute
   '/forgot-password/': typeof ForgotPasswordIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/users/': typeof UsersIndexRoute
   '/login/oauth/callback': typeof LoginOauthCallbackRoute
 }
 
@@ -161,6 +178,7 @@ export interface FileRouteTypes {
     | '/forgot-password/reset'
     | '/forgot-password'
     | '/login'
+    | '/users'
     | '/login/oauth/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -170,6 +188,7 @@ export interface FileRouteTypes {
     | '/forgot-password/reset'
     | '/forgot-password'
     | '/login'
+    | '/users'
     | '/login/oauth/callback'
   id:
     | '__root__'
@@ -179,6 +198,7 @@ export interface FileRouteTypes {
     | '/forgot-password/reset'
     | '/forgot-password/'
     | '/login/'
+    | '/users/'
     | '/login/oauth/callback'
   fileRoutesById: FileRoutesById
 }
@@ -190,6 +210,7 @@ export interface RootRouteChildren {
   ForgotPasswordResetRoute: typeof ForgotPasswordResetRoute
   ForgotPasswordIndexRoute: typeof ForgotPasswordIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
+  UsersIndexRoute: typeof UsersIndexRoute
   LoginOauthCallbackRoute: typeof LoginOauthCallbackRoute
 }
 
@@ -200,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordResetRoute: ForgotPasswordResetRoute,
   ForgotPasswordIndexRoute: ForgotPasswordIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
+  UsersIndexRoute: UsersIndexRoute,
   LoginOauthCallbackRoute: LoginOauthCallbackRoute,
 }
 
@@ -219,6 +241,7 @@ export const routeTree = rootRoute
         "/forgot-password/reset",
         "/forgot-password/",
         "/login/",
+        "/users/",
         "/login/oauth/callback"
       ]
     },
@@ -239,6 +262,9 @@ export const routeTree = rootRoute
     },
     "/login/": {
       "filePath": "login/index.tsx"
+    },
+    "/users/": {
+      "filePath": "users/index.tsx"
     },
     "/login/oauth/callback": {
       "filePath": "login/oauth/callback.tsx"
