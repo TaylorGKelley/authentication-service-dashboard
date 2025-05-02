@@ -8,11 +8,11 @@ export const Route = createFileRoute('/')({
 function Index() {
   const auth = useAuth();
   return (
-    <div className="p-2">
-      <h3>
+    <div>
+      <h3 className="text-3xl font-medium">
         {!auth.isAuthenticated
           ? 'Welcome Home!'
-          : `Welcome back, ${auth.user?.firstName ? auth.user?.firstName + ' ' + auth.user?.lastName : auth.user?.email}`}
+          : `Hi, ${auth.user?.firstName ? auth.user?.firstName + ' ' + auth.user?.lastName : auth.user?.email}`}
       </h3>
     </div>
   );
